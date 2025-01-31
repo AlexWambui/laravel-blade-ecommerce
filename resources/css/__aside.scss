@@ -1,0 +1,158 @@
+$aside_text_color: #fff;
+$aside_width: 15%;
+
+aside {
+    height: 100%;
+    position: fixed;
+    padding: 4px 8px;
+    text-align: center;
+    border-right: 1px solid $faded_line;
+
+    .header .text,
+    .text {
+        @include desktop_only;
+    }
+
+    i {
+        font-size: 1.5em;
+    }
+
+    a {
+        color: $aside_text_color;
+        text-decoration: none;
+    }
+
+    .header {
+        img {
+            width: 40px;
+            height: 40px;
+            padding: 2px;
+            border-radius: 50%;
+            border: 1px solid $success;
+        }
+    }
+
+    ul {
+        list-style: none;
+        margin: 0.4em 0 0;
+
+        li {
+            padding: 4px;
+            a {
+                opacity: 0.75;
+            }
+        }
+    }
+
+    .active,
+    ul li:hover {
+        color: $link_color;
+
+        a {
+            color: $aside_text_color;
+            font-weight: bold;
+            opacity: 1;
+        }
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 1.2em;
+        width: 90%;
+        margin: 0 auto;
+
+        .logout {
+            margin: 0.5em 0 0;
+            form {
+                button {
+                    padding: unset;
+                    background: none;
+                    i {
+                        color: $danger;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (width >= 726px) {
+    aside {
+        text-align: left;
+
+        i {
+            font-size: 0.95em;
+        }
+
+        .header {
+            padding: 0.2em 0;
+            display: grid;
+            grid-template-columns: 40px auto;
+            gap: 0.2em;
+            align-items: center;
+            justify-content: start;
+
+            img {
+                width: 35px;
+                height: 35px;
+            }
+
+            a {
+                font-weight: bold;
+            }
+
+            span {
+                font-size: 0.85em;
+                color: $aside_text_color;
+            }
+
+            .text {
+                display: grid;
+            }
+        }
+
+        ul {
+            margin: 0.5em 0;
+
+            li {
+                border-bottom: 1px solid $faded_line;
+
+                a {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.2em;
+                    font-size: 0.96em;
+                    letter-spacing: 0.2px;
+                }
+            }
+        }
+
+        .footer {
+            left: 0;
+            margin: 0 0.4em 0;
+
+            .logout button {
+                display: flex;
+                align-items: center;
+                gap: 0.3em;
+            }
+
+            .logout {
+                form {
+                    button {
+                        justify-content: center;
+                        color: #fff;
+                        background: $danger;
+                        width: 100%;
+                        padding: 6px 8px;
+                        text-align: center;
+
+                        i{
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

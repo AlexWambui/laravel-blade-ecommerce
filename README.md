@@ -44,4 +44,4 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 
 ## Version
-Laravel v11.39.1 (PHP v8.2.12)
+Laravel v11.41.3 (PHP v8.2.12)

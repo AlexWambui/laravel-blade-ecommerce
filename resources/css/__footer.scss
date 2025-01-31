@@ -1,0 +1,59 @@
+footer {
+    background: darken($background_color, 15%);
+    
+    .container {
+        padding: 2.8em 5%;
+
+        section {
+            margin: 0 0 1.5em;
+        }
+
+        .branding {
+            .title {
+                font-size: 1.5em;
+                margin: 0.2em 0;
+            }
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+        }
+
+        .contacts {
+            .socials {
+                margin: 0.8em 0 0;
+                img {
+                    width: 24px;
+                    height: 24px;
+                    margin: 0 1em 0 0;
+                }
+            }
+        }
+    }
+
+    .copyright {
+        border-top: 1px solid $faded_line;
+        text-align: center;
+        padding: 12px;
+    }
+}
+
+@media screen and (width >= 726px) {
+    footer {
+        .container {
+            display: grid;
+            grid-template-columns: 30% 1fr 1fr;
+
+            section {
+                margin: 0;
+            }
+
+            .links,
+            .contacts {
+                justify-self: center;
+            }
+        }
+    }
+}

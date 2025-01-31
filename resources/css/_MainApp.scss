@@ -1,0 +1,16 @@
+.MainApp {
+    .app_content {
+        margin-left: $aside_width;
+        padding: 4px 16px;
+        min-height: 100dvh;
+        height: auto;
+    }
+}
+
+@media screen and (width >= 726px) {
+    .MainApp {
+        aside {
+            width: $aside_width;
+        }
+    }
+}
