@@ -548,4 +548,30 @@ button:hover {
   .MainApp aside {
     width: 15%;
   }
+}
+.Dashboard .stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+  padding: 8px 0;
+}
+.Dashboard .stats .stat {
+  display: grid;
+  background: #3b3b3b;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.Dashboard .stats .stat span:first-of-type {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.Dashboard .stats .stat span:last-of-type {
+  font-size: 0.85em;
+  color: #acacac;
+}
+
+@media screen and (width >= 726px) {
+  .Dashboard .stats {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }/*# sourceMappingURL=app.css.map */
