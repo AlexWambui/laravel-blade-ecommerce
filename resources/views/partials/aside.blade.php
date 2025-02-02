@@ -1,6 +1,7 @@
 <aside>
     @php
         $user = Auth::user();
+        $user_level_label = $user->user_level_label;
     @endphp
 
     <div class="header">
@@ -23,18 +24,25 @@
                 'route' => 'dashboard',
                 'icon' => 'fas fa-home',
                 'text' => 'Dashboard',
-                'level' => [0, 1],
+                'level' => [],
+            ],
+            [
+                'route' => 'users.index',
+                'icon' => 'fas fa-users',
+                'text' => 'Users',
+                'level' => ['super admin', 'admin'],
             ],
             [
                 'route' => 'messages.index',
                 'icon' => 'fas fa-comment',
                 'text' => 'Messages',
-                'level' => [0, 1],
+                'level' => ['super admin', 'admin'],
             ],
         ]);
 
-        $userLevel = $user->user_level ?? null;
-        $nav_links = $nav_content->filter(fn($link) => in_array($userLevel, $link['level']));
+        $nav_links = $nav_content->filter(function($link) use($user_level_label) {
+            return empty($link['level']) || in_array($user_level_label, $link['level']);
+        });
     @endphp
 
     <ul class="links">
