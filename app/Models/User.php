@@ -49,17 +49,39 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'user_level' => 'integer',
+            'user_status' => 'integer',
         ];
     }
 
     const USERLEVELS = [
-        '0' => 'super admin',
-        '1' => 'admin',
-        '2' => 'normal user',
+        0 => 'super admin',
+        1 => 'admin',
+        2 => 'user',
     ];
 
     const USERSTATUS = [
-        '0' => 'suspended',
-        '1' => 'active',
+        1 => 'active',
+        0 => 'suspended',
     ];
+
+    public function getFullNameAttribute():string
+    {
+        return $this->first_name. ' ' . $this->last_name;
+    }
+
+    public function getPhoneNumbersAttribute(): string
+    {
+        $numbers = array_filter(
+            [$this->phone_number, $this->phone_other],
+            fn ($value) => !is_null($value) && $value !== ''
+        );
+
+        return implode(' / ', $numbers);
+    }
+
+    public function getUserLevelLabelAttribute(): string
+    {
+        return self::USERLEVELS[$this->user_level] ?? 'unknown level';
+    }
 }
