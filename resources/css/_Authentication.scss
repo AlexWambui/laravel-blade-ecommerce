@@ -23,11 +23,19 @@
             color: blue;
         }
     }
+
+    .VerifyEmail {
+        form {
+            margin: 0 0 1em;
+        }
+    }
 }
 
 @media screen and (width >= 726px) {
     .Authentication {
-        .Login {
+        .Login,
+        .ForgotPassword,
+        .ResetPassword {
             width: 30dvw;
         }
 

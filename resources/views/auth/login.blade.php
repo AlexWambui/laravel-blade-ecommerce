@@ -5,7 +5,6 @@
 
     <section class="Login">
         <div class="container">
-            
             <form action="{{ route('login') }}" method="post">
                 @csrf
                 

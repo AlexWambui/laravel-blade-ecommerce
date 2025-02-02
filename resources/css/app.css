@@ -714,9 +714,14 @@ button:hover {
 .Authentication form a {
   color: blue;
 }
+.Authentication .VerifyEmail form {
+  margin: 0 0 1em;
+}
 
 @media screen and (width >= 726px) {
-  .Authentication .Login {
+  .Authentication .Login,
+  .Authentication .ForgotPassword,
+  .Authentication .ResetPassword {
     width: 30dvw;
   }
   .Authentication .Signup {
