@@ -18,7 +18,7 @@ class Admin
         $user = Auth()->user();
         $user_level = $user->user_level;
 
-        if($user && $user_level == 1) {
+        if($user && $user_level == 1 || $user_level == 0) {
             return $next($request);
         }
 

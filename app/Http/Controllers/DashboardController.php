@@ -15,7 +15,7 @@ class DashboardController extends Controller
             ->count();
         $count_all_users = User::count();
         $messages = Message::latest()
-            ->where('read', 0)
+            ->where('status', 0)
             ->take(5)
             ->get();
 

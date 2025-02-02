@@ -15,5 +15,6 @@
         {{ $slot }}
 
         {{ $scripts ?? '' }}
+        <script src="{{ asset('assets/js/alert.js') }}"></script>
     </body>
 </html>

@@ -1,4 +1,8 @@
 .Dashboard {
+    .section {
+        margin: 0 0 0.8em;
+    }
+
     .stats {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -20,6 +24,20 @@
                 &:last-of-type {
                     font-size: 0.85em;
                     color: $faded_text;
+                }
+            }
+        }
+
+    }
+
+    .messages {
+        .message {
+            border-bottom: 1px solid $faded_line;
+            padding: 4px 0;
+
+            p {
+                span {
+                    font-size: 0.8em;
                 }
             }
         }

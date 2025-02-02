@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Message extends Model
 {
@@ -13,4 +14,9 @@ class Message extends Model
         'message',
         'status',
     ]; 
+
+    public function getExcerptAttribute(): string
+    {
+        return Str::limit($this->message, 50, '...');
+    }
 }

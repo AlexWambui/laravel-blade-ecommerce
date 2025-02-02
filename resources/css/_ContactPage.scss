@@ -1,0 +1,77 @@
+.ContactPage {
+    .container {
+        display: grid;
+        gap: 1em;
+        align-items: center;
+
+        .text {
+            .title {
+                @include font_size(1.2em, 3.2em);
+                margin: 0 0 0.8em;
+            }
+
+            .content {
+                display: grid;
+                font-size: 2em;
+            }
+        }
+    }
+}
+
+.MainApp {
+    .UserMessage {
+        .header {
+            p {
+                span {
+                    font-size: 0.85em;
+
+                    &:first-of-type {
+                        font-size: 1em;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+
+        .body {
+            padding: 12px 5%;
+            color: #000;
+
+            .details {
+                .message_details {
+                    .time {
+                        font-size: 0.75em;
+                        text-align: center;
+                    }
+    
+                    .user_message {
+                        background: #dcfcfa;
+                        width: 70%;
+                        margin: 0.5em 0 2em;
+                        padding: 8px 15px;
+                        border-radius: 8px 8px 32px 8px;
+                        box-shadow: 2px 2px 4px #6e6e6e;
+                    }
+                }
+            }
+
+            form {
+                margin: 2em 0 0;
+                padding: unset;
+            }
+        }
+    }
+}
+
+@media screen and (width >= 726px) {
+    .ContactPage {
+        .container {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .UserMessage {
+        width: 40dvw;
+        margin: auto;
+    }
+}

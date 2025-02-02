@@ -16,3 +16,16 @@ $status: #49cefa;
 $warning: #c28005;
 
 $faded_line: #666666;
+
+.read {
+    color: $faded_text;
+    font-style: italic;
+}
+
+.center {
+    text-align: center;
+}
+
+.stack {
+    display: grid;
+}

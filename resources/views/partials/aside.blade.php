@@ -6,7 +6,7 @@
     <div class="header">
         <a href="{{ route('profile.edit') }}">
             @if($user->image)
-                <img src="{{ asset('storage/' . ($user->image)) }}" alt="User Image">
+                <img src="{{ asset('storage/' . ($user->image)) }}" alt="User Image" width="25" height="25">
             @else
                 <img src="{{ asset('assets/images/default_profile.jpg') }}" alt="Profile Image" width="25" height="25">
             @endif
@@ -23,6 +23,12 @@
                 'route' => 'dashboard',
                 'icon' => 'fas fa-home',
                 'text' => 'Dashboard',
+                'level' => [0, 1],
+            ],
+            [
+                'route' => 'messages.index',
+                'icon' => 'fas fa-comment',
+                'text' => 'Messages',
                 'level' => [0, 1],
             ],
         ]);

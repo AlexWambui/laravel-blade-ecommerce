@@ -16,6 +16,5 @@
 
     <x-slot name="scripts">
         {{ $scripts ?? '' }}
-        <script src="{{ asset('assets/js/alert.js') }}"></script>
     </x-slot>
 </x-app-layout>
