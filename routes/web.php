@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 
 Route::view('/', 'index')->name('home-page');
@@ -19,6 +20,8 @@ Route::middleware(['auth', 'verified', 'active'])->group(function() {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware(['admin'])->group(function() {
+        Route::resource('users', UserController::class)->except('show');
+
         Route::resource('messages', MessageController::class)->only('index', 'edit', 'destroy');
     });
 });
