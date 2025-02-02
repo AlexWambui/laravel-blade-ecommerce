@@ -6,6 +6,9 @@ $theme3: #eed9c4;
 $background_color: #2b3230;
 $faded_background: #3b3b3b;
 
+$badge_background: #54b7b1;
+$badge_color: #fff;
+
 $text_color: #efefef;
 $link_color: $theme2;
 $faded_text: #acacac;
@@ -17,13 +20,30 @@ $warning: #c28005;
 
 $faded_line: #666666;
 
-.read {
+.read,
+.inactive {
     color: $faded_text;
     font-style: italic;
 }
 
+.unverified {
+    color: $danger;
+}
+
+.badge {
+    font-size: 0.65em;
+    background: $badge_background;
+    color: $badge_color;
+    padding: 0 6px 1px;
+    border-radius: 4px;
+}
+
+.super_admin {
+    background: $success;
+}
+
 .center {
-    text-align: center;
+    text-align: center !important;
 }
 
 .stack {

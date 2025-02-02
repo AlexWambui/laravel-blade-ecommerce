@@ -17,8 +17,19 @@ $header_color: #000;
             }
 
             .stats {
+                display: flex;
+                gap: 0.4em;
+
                 span {
                     font-size: 0.75em;
+
+                    &:not(:last-of-type) {
+                        &::after {
+                            content: ".";
+                            margin-left: 0.4em;
+                            font-weight: bold;
+                        }
+                    }
                 }
             }
         }

@@ -1,10 +1,27 @@
-.read {
+.read,
+.inactive {
   color: #acacac;
   font-style: italic;
 }
 
+.unverified {
+  color: #ff0000;
+}
+
+.badge {
+  font-size: 0.65em;
+  background: #54b7b1;
+  color: #fff;
+  padding: 0 6px 1px;
+  border-radius: 4px;
+}
+
+.super_admin {
+  background: #008000;
+}
+
 .center {
-  text-align: center;
+  text-align: center !important;
 }
 
 .stack {
@@ -387,8 +404,17 @@ footer .copyright {
 .table .header .details .title {
   font-size: 1em;
 }
+.table .header .details .stats {
+  display: flex;
+  gap: 0.4em;
+}
 .table .header .details .stats span {
   font-size: 0.75em;
+}
+.table .header .details .stats span:not(:last-of-type)::after {
+  content: ".";
+  margin-left: 0.4em;
+  font-weight: bold;
 }
 .table .header input {
   padding: 4px 12px;
@@ -519,6 +545,13 @@ form .inputs {
   height: 100px;
   cursor: grab;
 }
+.custom_form form .details {
+  margin: 0 0 1.6em;
+}
+.custom_form form .details .image {
+  width: 100px;
+  height: 100px;
+}
 .custom_form form .custom_radio_buttons {
   display: flex;
   align-items: center;
@@ -534,7 +567,7 @@ form .inputs {
   width: auto;
 }
 .custom_form form .custom_radio_buttons label .option_radio {
-  margin: 0 0.5em 0 0;
+  margin: 0 0.2em 0 0;
   position: relative;
   -webkit-appearance: none;
      -moz-appearance: none;

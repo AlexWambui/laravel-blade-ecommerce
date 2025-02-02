@@ -70,6 +70,15 @@ form {
             }
         }
 
+        .details {
+            margin: 0 0 1.6em;
+
+            .image {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
         .custom_radio_buttons {
             display: flex;
             align-items: center;
@@ -85,7 +94,7 @@ form {
                 width: auto;
     
                 .option_radio {
-                    margin: 0 0.5em 0 0;
+                    margin: 0 0.2em 0 0;
                     position: relative;
                     appearance: none;
                     cursor: pointer;
