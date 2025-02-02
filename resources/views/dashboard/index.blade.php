@@ -32,7 +32,7 @@
         </div>
 
         <div class="section messages">
-            <p class="title">Recent Messages</p>
+            <p class="title">Unread Messages</p>
             @foreach($messages as $message)
                 <div class="message">
                     <p class="stack">
