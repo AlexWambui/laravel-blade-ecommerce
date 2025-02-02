@@ -10,6 +10,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $user = Auth()->user();
         $count_users = User::whereNotIn('user_level', [0, 1])
             ->where('user_status', 1)
             ->count();
@@ -20,6 +21,7 @@ class DashboardController extends Controller
             ->get();
 
         return view('dashboard.index', compact(
+            'user',
             'count_users',
             'count_all_users',
             'messages',
