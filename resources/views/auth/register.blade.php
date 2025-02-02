@@ -15,13 +15,13 @@
                 <div class="input_group">
                     <div class="inputs">
                         <label for="first_name" class="required">First Name</label>
-                        <input type="text" name="first_name" id="first_name" placeholder="First Name" value={{ old('first_name') }}>
+                        <input type="text" name="first_name" id="first_name" placeholder="First Name" value="{{ old('first_name') }}">
                         <x-input-error field="first_name" />
                     </div>
     
                     <div class="inputs">
                         <label for="last_name" class="required">Last Name</label>
-                        <input type="text" name="last_name" id="last_name" placeholder="Last Name" value={{ old('last_name') }}>
+                        <input type="text" name="last_name" id="last_name" placeholder="Last Name" value="{{ old('last_name') }}">
                         <x-input-error field="last_name" />
                     </div>
                 </div>
