@@ -24,6 +24,7 @@ class UsersSeeder extends Seeder
                 'email' => 'admin_root@gmail.com',
                 'password' => $admin_password,
                 'user_level' => 0,
+                'email_verified_at' => now(),
             ],
             [
                 'first_name' => 'Admin',
@@ -31,24 +32,28 @@ class UsersSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'password' => $admin_password,
                 'user_level' => 1,
+                'email_verified_at' => now(),
             ],
             [
                 'first_name' => 'Jane',
                 'last_name' => 'Smith',
                 'email' => 'jane@gmail.com',
                 'password' => $user_password,
+                'email_verified_at' => now(),
             ],
             [
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'email' => 'john@gmail.com',
                 'password' => $user_password,
+                'email_verified_at' => now(),
             ],
             [
                 'first_name' => 'User',
                 'last_name' => 'Johnson',
                 'email' => 'user@gmail.com',
                 'password' => $user_password,
+                'email_verified_at' => now(),
             ],
         ];
 
