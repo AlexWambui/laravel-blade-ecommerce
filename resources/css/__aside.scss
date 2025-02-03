@@ -37,7 +37,7 @@ aside {
         margin: 0.4em 0 0;
 
         li {
-            padding: 4px;
+            padding: 2px 4px;
             a {
                 opacity: 0.75;
             }
@@ -81,7 +81,7 @@ aside {
         text-align: left;
 
         i {
-            font-size: 0.95em;
+            font-size: 0.92em;
         }
 
         .header {
@@ -97,10 +97,6 @@ aside {
                 height: 35px;
             }
 
-            a {
-                font-weight: bold;
-            }
-
             span {
                 font-size: 0.85em;
                 color: $aside_text_color;
@@ -112,16 +108,18 @@ aside {
         }
 
         ul {
-            margin: 0.5em 0;
-
             li {
                 border-bottom: 1px solid $faded_line;
+
+                &:first-of-type {
+                    border-top: 1px solid $faded_line;
+                }
 
                 a {
                     display: flex;
                     align-items: center;
                     gap: 0.2em;
-                    font-size: 0.96em;
+                    font-size: 0.92em;
                     letter-spacing: 0.2px;
                 }
             }
@@ -134,18 +132,16 @@ aside {
             .logout button {
                 display: flex;
                 align-items: center;
-                gap: 0.3em;
+                gap: 0.4em;
             }
 
             .logout {
                 form {
                     button {
                         justify-content: center;
-                        color: #fff;
                         background: $danger;
-                        width: 100%;
-                        padding: 6px 8px;
-                        text-align: center;
+                        color: #fff;
+                        padding: 4px 16px;
 
                         i{
                             color: #fff;

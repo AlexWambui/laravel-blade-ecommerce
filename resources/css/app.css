@@ -210,7 +210,7 @@ aside ul {
   margin: 0.4em 0 0;
 }
 aside ul li {
-  padding: 4px;
+  padding: 2px 4px;
 }
 aside ul li a {
   opacity: 0.75;
@@ -247,7 +247,7 @@ aside .footer .logout form button i {
     text-align: left;
   }
   aside i {
-    font-size: 0.95em;
+    font-size: 0.92em;
   }
   aside .header {
     padding: 0.2em 0;
@@ -261,9 +261,6 @@ aside .footer .logout form button i {
     width: 35px;
     height: 35px;
   }
-  aside .header a {
-    font-weight: bold;
-  }
   aside .header span {
     font-size: 0.85em;
     color: #fff;
@@ -271,17 +268,17 @@ aside .footer .logout form button i {
   aside .header .text {
     display: grid;
   }
-  aside ul {
-    margin: 0.5em 0;
-  }
   aside ul li {
     border-bottom: 1px solid #666666;
+  }
+  aside ul li:first-of-type {
+    border-top: 1px solid #666666;
   }
   aside ul li a {
     display: flex;
     align-items: center;
     gap: 0.2em;
-    font-size: 0.96em;
+    font-size: 0.92em;
     letter-spacing: 0.2px;
   }
   aside .footer {
@@ -291,15 +288,13 @@ aside .footer .logout form button i {
   aside .footer .logout button {
     display: flex;
     align-items: center;
-    gap: 0.3em;
+    gap: 0.4em;
   }
   aside .footer .logout form button {
     justify-content: center;
-    color: #fff;
     background: #ff0000;
-    width: 100%;
-    padding: 6px 8px;
-    text-align: center;
+    color: #fff;
+    padding: 4px 16px;
   }
   aside .footer .logout form button i {
     color: #fff;
