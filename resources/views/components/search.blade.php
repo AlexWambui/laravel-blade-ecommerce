@@ -1,1 +1,1 @@
-<script src="{{ asset('assets/js/search.js') }}"></script>
+<script src="{{ Vite::asset('resources/js/search.js') }}"></script>

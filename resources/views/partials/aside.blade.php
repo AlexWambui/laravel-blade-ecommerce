@@ -9,7 +9,7 @@
             @if($user->image)
                 <img src="{{ asset('storage/' . ($user->image)) }}" alt="User Image" width="25" height="25">
             @else
-                <img src="{{ asset('assets/images/default_profile.jpg') }}" alt="Profile Image" width="25" height="25">
+                <x-default-profile-image width="25" height="25" />
             @endif
         </a>
         <span class="text">
