@@ -81,17 +81,17 @@
                     </div>
                 </div>
 
-                @if($user->user_level_label != 'super admin')
+                @can('update-user', $user)
                     <div class="buttons">
                         <button type="submit">Update User</button>
-
+                        
                         <button type="button" class="btn_danger" onclick="deleteItem({{ $user->id }}, 'user');"
                             form="deleteForm_{{ $user->id }}">
                             <i class="fas fa-trash-alt delete"></i>
                             <span>Delete User</span>
                         </button>
                     </div>
-                @endif
+                @endcan
             </form>
 
             <form id="deleteForm_{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="post"

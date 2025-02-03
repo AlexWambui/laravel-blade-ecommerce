@@ -110,27 +110,29 @@
             </form>
         </div>
 
-        <div class="custom_form">
-            <div class="header">
-                <p class="title">Delete Account</p>
-            </div>
-
-            <form id="deleteAccountForm" action="{{ route('profile.destroy') }}" method="post">
-                @csrf
-                @method('delete')
-
-                <p>Please remember that all your data and information will be deleted. Download any data or information you wish to retain.</p>
-
-                <div class="inputs">
-                    <input type="password" id="password" name="password"
-                        placeholder="Enter your password to confirm account deletion" required>
-                    <span class="inline_alert">{{ $errors->userDeletion->first('password') }}</span>
+        @cannot('view-as-super-admin')
+            <div class="custom_form">
+                <div class="header">
+                    <p class="title">Delete Account</p>
                 </div>
 
-                <button id="deleteAccountBtn" type="button" onclick="checkPasswordAndDelete()"
-                    class="btn_danger" style="display: none;">Delete Account</button>
-            </form>
-        </div>
+                <form id="deleteAccountForm" action="{{ route('profile.destroy') }}" method="post">
+                    @csrf
+                    @method('delete')
+
+                    <p>Please remember that all your data and information will be deleted. Download any data or information you wish to retain.</p>
+
+                    <div class="inputs">
+                        <input type="password" id="password" name="password"
+                            placeholder="Enter your password to confirm account deletion" required>
+                        <span class="inline_alert">{{ $errors->userDeletion->first('password') }}</span>
+                    </div>
+
+                    <button id="deleteAccountBtn" type="button" onclick="checkPasswordAndDelete()"
+                        class="btn_danger" style="display: none;">Delete Account</button>
+                </form>
+            </div>
+        @endcannot
     </section>
 
     <x-slot name="scripts">
