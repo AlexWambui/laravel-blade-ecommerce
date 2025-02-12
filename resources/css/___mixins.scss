@@ -1,7 +1,7 @@
 @mixin desktop_only {
     display: none;
 
-    @media screen and (width >= 726px) {
+    @media screen and (min-width: 726px) {
         display: block;
     }
 }
@@ -17,7 +17,7 @@
     grid-template-columns: 1fr;
     gap: 0.5em;
 
-    @media screen and (width >= 726px) {
+    @media screen and (min-width: 726px) {
         grid-template-columns: repeat($columns, 1fr);
     }
 }
@@ -25,7 +25,7 @@
 @mixin font_size($mobile, $desktop) {
     font-size: $mobile;
 
-    @media screen and (width >= 726px) {
+    @media screen and (min-width: 726px) {
         font-size: $desktop;
     }
 }
