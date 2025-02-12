@@ -35,21 +35,73 @@ form {
     .inputs {
         margin: 0 0 0.8em;
     }
+
+    input[type=file] {
+        color: #000;
+    }
 }
 
 .custom_form {
     background: #fff;
     padding: 0 0 12px;
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px;
     margin: 0 0 1em;
+    border: 1px solid $faded_line;
 
     .header {
         display: flex;
         gap: 0.5em;
-        background: #000;
-        color: #efefef;
+        background: $elements_background;
+        color: $elements_color;
         padding: 8px 24px;
         border-radius: 8px 8px 0 0;
+
+        a {
+            color: $light_link_color;
+        }
+    }
+
+    .details {
+        margin: 0 0 1.6em;
+        color: #000;
+
+        .image {
+            width: 100px;
+            height: 100px;
+            margin: 0 0 0.5em;
+        }
+
+        a {
+            color: $link_color;
+        }
+
+        .columns {
+            padding: 12px 24px;
+            display: grid;
+            gap: 2em;
+
+            .column {
+                p {
+                    display: grid;
+                    grid-template-columns: 0.8fr 2fr;
+                    margin: 0.2em 0 0;
+
+                    span {
+                        &:first-of-type {
+                            color: darken($faded_text, 30);
+                        }
+                    }
+                }
+
+                .contents {
+                    margin: 0.5em 0 0;
+                }
+            }
+
+            form {
+                padding: unset;
+            }
+        }
     }
     
     form {
@@ -58,6 +110,10 @@ form {
         p {
             color: #000;
             margin: 0.4em 0;
+        }
+
+        label {
+            color: $faded_text;
         }
 
         .image_input {
@@ -70,20 +126,12 @@ form {
             }
         }
 
-        .details {
-            margin: 0 0 1.6em;
-
-            .image {
-                width: 100px;
-                height: 100px;
-            }
-        }
-
         .custom_radio_buttons {
             display: flex;
             align-items: center;
             gap: 1em;
             margin: 0.3em 0 0;
+            flex-wrap:wrap;
     
             label {
                 position: relative;
@@ -149,7 +197,7 @@ form {
     }
 }
 
-@media screen and (width >= 726px) {
+@media screen and (min-width: 1024px) {
     form {
         .input_group,
         .input_group_3 {
@@ -163,6 +211,14 @@ form {
 
         .input_group_3 {
             grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+
+    .custom_form {
+        .details {
+            .columns {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     }
 }
