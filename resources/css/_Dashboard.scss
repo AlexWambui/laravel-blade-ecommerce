@@ -11,14 +11,14 @@
 
         .stat {
             display: grid;
-            background: $faded_background;
-            padding: 8px 12px;
+            background: $dashboard_background;
+            padding: 8px 16px;
             border-radius: 8px;
             
             span {
                 &:first-of-type {
                     font-weight: bold;
-                    font-size: 1.2em;
+                    font-size: 1.6em;
                 }
 
                 &:last-of-type {
@@ -44,7 +44,7 @@
     }
 }
 
-@media screen and (width >= 726px) {
+@media screen and (min-width: 726px) {
     .Dashboard {
         .stats {
             grid-template-columns: repeat(5, 1fr);
