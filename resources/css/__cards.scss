@@ -1,0 +1,40 @@
+.cards {
+    display: grid;
+    gap: 1.5em;
+
+    .card {
+        box-shadow: 4px 6px 8px #808080;
+        border-radius: 8px;
+
+        a {
+            color: $text_color;
+        }
+
+        .image {
+            height: 300px;
+            padding: 4px;
+        }
+
+        .text {
+            padding: 10px 16px 15px;
+
+            .details {
+                .title {
+                    font-size: 1.28em;
+                    margin: 0 0 0.8em;
+                }
+
+                .price {
+                    font-size: 1.2em;
+                    color: $success;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

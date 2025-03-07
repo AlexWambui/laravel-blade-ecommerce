@@ -33,6 +33,12 @@
                 'level' => ['super admin', 'admin'],
             ],
             [
+                'route' => 'products.index',
+                'icon' => 'fas fa-barcode',
+                'text' => 'Products',
+                'level' => ['super admin', 'admin'],
+            ],
+            [
                 'route' => 'messages.index',
                 'icon' => 'fas fa-comment',
                 'text' => 'Messages',

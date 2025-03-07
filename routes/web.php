@@ -5,6 +5,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\Products\ProductCategoryController;
+use App\Http\Controllers\Products\ProductController;
+use App\Http\Controllers\Products\ProductImageController;
 
 Route::view('/', 'index')->name('home-page');
 Route::view('/about', 'about')->name('about-page');
@@ -23,6 +26,10 @@ Route::middleware(['auth', 'verified', 'active'])->group(function() {
         Route::resource('users', UserController::class)->except('show');
 
         Route::resource('messages', MessageController::class)->only('index', 'edit', 'destroy');
+
+        Route::resource('product-categories', ProductCategoryController::class)->except('create', 'show');
+        Route::resource('products', ProductController::class)->except('show');
+        Route::resource('product-images', ProductImageController::class)->except('show');
     });
 });
 

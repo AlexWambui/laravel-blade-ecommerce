@@ -4,6 +4,32 @@
         padding: 4px 16px;
         min-height: 100dvh;
         height: auto;
+
+        .system_nav {
+            display: flex;
+            gap: 1em;
+            margin: 0.2em 0 0.4em;
+            
+            a {
+                font-weight: bold;
+            }
+
+            a:not(:last-child),
+            span:not(:last-child) {
+                font-weight: bold;
+
+                &::after {
+                    content: " / ";
+                    color: $text_color;
+                    margin: 0 0 0 0.6em;
+                }
+            }
+        }
+
+        .row_container {
+            display: grid;
+            gap: 2em;
+        }
     }
 }
 
@@ -11,6 +37,12 @@
     .MainApp {
         aside {
             width: $aside_width;
+        }
+
+        .app_content {
+            .row_container {
+                grid-template-columns: 2fr 1fr;
+            }
         }
     }
 }
