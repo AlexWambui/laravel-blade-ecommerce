@@ -30,6 +30,8 @@ Route::middleware(['auth', 'verified', 'active'])->group(function() {
         Route::resource('product-categories', ProductCategoryController::class)->except('create', 'show');
         Route::resource('products', ProductController::class)->except('show');
         Route::resource('product-images', ProductImageController::class)->except('show');
+        Route::get('/products/images/delete/{id}', [ProductController::class, 'deleteProductImage'])->name('products.delete_image');
+        Route::post('/products/images/sort', [ProductController::class, 'sortProductImages'])->name('products.sort_images');
     });
 });
 

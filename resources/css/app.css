@@ -1,3 +1,11 @@
+.danger {
+  color: #ff0000;
+}
+
+.success {
+  color: #008000;
+}
+
 .read,
 .inactive {
   color: #575757;
@@ -637,7 +645,7 @@ footer .copyright {
 .cards {
   display: -ms-grid;
   display: grid;
-  gap: 1.5em;
+  gap: 2em 1.5em;
 }
 
 .cards .card {
@@ -661,12 +669,52 @@ footer .copyright {
 
 .cards .card .text .details .title {
   font-size: 1.28em;
-  margin: 0 0 0.8em;
+  margin: 0 0 0.4em;
 }
 
-.cards .card .text .details .price {
-  font-size: 1.2em;
+.cards .card .text .details .prices {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 0.8em;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.cards .card .text .details .prices .price {
+  font-size: 1.48em;
+  font-weight: bold;
   color: #008000;
+}
+
+.cards .card .text .row {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 100px;
+      grid-template-columns: 1fr 100px;
+  gap: 1.2em;
+}
+
+.cards .card .text .row .cart {
+  -ms-grid-column-align: center;
+      justify-self: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.cards .card .text .row .cart form {
+  text-align: center;
+}
+
+.cards .card .text .row .cart form button {
+  background: unset;
+}
+
+.cards .card .text .row .cart form button span {
+  font-size: 2.8em;
+  color: blue;
 }
 
 @media screen and (min-width: 1024px) {
@@ -1167,6 +1215,33 @@ button:hover {
   display: -ms-grid;
   display: grid;
   gap: 2em;
+}
+
+.Products .product_images {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1.5em;
+  margin: 0 0 0.8em;
+}
+
+.Products .product_images .product_image {
+  position: relative;
+  border: 1px solid #c4c4c4;
+  border-radius: 8px;
+}
+
+.Products .product_images .product_image img {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.Products .product_images .product_image a {
+  position: absolute;
+  top: -15px;
+  right: -5px;
+  font-size: 1.2em;
+  color: #ff0000;
 }
 
 @media screen and (min-width: 726px) {

@@ -19,7 +19,7 @@
 
                 <div class="input_group_3">
                     <div class="inputs">
-                        <label for="category_id" class="required">Product Category</label>
+                        <label for="category_id">Product Category</label>
                         <select name="category_id" id="category_id">
                             <option value="">Select Category</option>
                             @foreach($categories as $category)
@@ -104,7 +104,7 @@
                     </div>
 
                     <div class="inputs">
-                        <label for="discount_price">Discount Price (New Price)</label>
+                        <label for="discount_price">New Price (After Discount)</label>
                         <input type="number" step="0.01" name="discount_price" id="discount_price" value="{{ old('discount_price', 0.00) }}" placeholder="Enter the discount_price." />
                         <x-input-error field="discount_price" />
                     </div>

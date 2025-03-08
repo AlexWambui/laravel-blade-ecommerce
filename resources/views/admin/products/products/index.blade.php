@@ -46,12 +46,13 @@
                                             <p class="title">{{ $product->name }}</p>
                                         </a>
 
-                                        <p class="price">
-                                            @if($product->discount_price != 0.00 && $product->discount_price < $product->selling_price)
-                                                <span class="new_price">Ksh. {{ $product->discount_price }}</span>
-                                                <span class="old_price"><del>{{ $product->selling_price }}</del></span>
+                                        <p class="prices">
+                                            @if($product->discount_price && $product->discount_price < $product->selling_price)
+                                                <span class="price success">Ksh. {{ number_format($product->getEffectivePrice(), 2) }}</span>
+                                                <span class="old_price danger"><del>{{ number_format($product->selling_price, 2) }}</del></span>
+                                                <span class="discount">({{ $product->calculateDiscount() }}% off)</span>
                                             @else
-                                                <span class="new_price">Ksh. {{ $product->selling_price }}</span>
+                                                <span class="price success">Ksh. {{ number_format($product->getEffectivePrice(), 2) }}</span>
                                             @endif
                                         </p>
                                     </div>

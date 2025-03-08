@@ -41,6 +41,14 @@ $light_link_color: lightblue;
 
 
 
+.danger {
+    color: $danger;
+}
+
+.success {
+    color: $success;
+}
+
 .read,
 .inactive {
     color: $faded_text;

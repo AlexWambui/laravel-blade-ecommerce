@@ -32,7 +32,7 @@ class ProductController extends Controller
     {
         $validated_data = $request->validate([
             'name'=> 'required|string|max:120|unique:products,name',
-            'product_code' => 'numeric',
+            'product_code' => 'nullable|numeric',
             'category_id' => 'nullable',
             'stock_count' => 'numeric',
             'safety_stock' => 'numeric',
@@ -50,9 +50,18 @@ class ProductController extends Controller
         $validated_data['featured'] = $request->featured;
         $validated_data['is_visible'] = $request->is_visible;
 
-        return DB::transaction(function () use ($validated_data, $request) {
+        $images = $request->file('images');
+
+        if($images && count($images) > 5) {
+            return redirect()->back()->withErrors(['images' => 'You can only upload a max of 5 images.']);
+        }
+
+        return DB::transaction(function () use ($validated_data, $request, $images) {
             $product = Product::create($validated_data);
-            $this->storeProductImages($request, $product);
+            
+            if($images) {
+                $this->storeProductImages($images, $product);
+            }
 
             return redirect()->route('products.index')->with('success', 'Product has been added.');
         });
@@ -64,7 +73,7 @@ class ProductController extends Controller
             ['is_visible', 1],
             ['slug', $slug],
         ])->firstOrFail();
-        $product_images = $product->getProductImages;
+        $product_images = $product->images();
         $related_products = Product::where('category_id', $product->category_id)
         ->where('id', '!=', $product->id)
         ->take(5)
@@ -82,7 +91,7 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        $validated = $request->validate([
+        $validated_data = $request->validate([
             'name'=> 'required|string|max:120|unique:products,name,' . $product->id,
             'product_code' => 'numeric',
             'category_id' => 'nullable',
@@ -94,28 +103,41 @@ class ProductController extends Controller
             'product_measurement' => 'nullable|numeric',
             'measurement_id' => 'nullable|numeric',
             'product_order' => 'nullable|numeric',
-            'images' => 'max:2048',
+            'images.*' => 'image|max:2048',
             'description' => 'nullable',
         ]);
+    
+        $validated_data['slug'] = Str::slug($validated_data['name']);
+        $validated_data['featured'] = $request->featured;
+        $validated_data['is_visible'] = $request->is_visible;
+    
+        $images = $request->file('images') ?? []; // Ensure `$images` is an array
 
-        $validated['slug'] = Str::slug($validated['name']);
-        $validated['featured'] = $request->featured;
-        $validated['is_visible'] = $request->is_visible;
-        
-        return DB::transaction(function () use ($validated, $request, $product) {
-            $product->update($validated);
-            $this->updateProductImages($request, $product);
+        if ($images) {
+            $existing_images_count = $product->images()->count();
+            $new_images_count = is_array($images) ? count($images) : 0;
 
+            if ($existing_images_count + $new_images_count > 5) {
+                return redirect()->route('products.edit', $product->id)
+                    ->withErrors(['images' => 'You can only upload a maximum of five images.'])
+                    ->withInput();
+            }
+        }
+    
+        return DB::transaction(function () use ($validated_data, $product, $images) {
+            $product->update($validated_data);
+            $this->updateProductImages($images, $product);
+    
             return redirect()->route('products.index')->with('success', 'Product has been updated.');
         });
-    }
+    }       
 
     public function destroy(Product $product)
     {
         return DB::transaction(function () use ($product) {
-            $image_paths = $product->getProductImages->pluck('image')->toArray();
+            $image_paths = $product->images->pluck('image')->toArray();
 
-            $product->getProductImages()->delete();
+            $product->images()->delete();
             $product->delete();
 
             foreach ($image_paths as $image_path) {
@@ -126,51 +148,55 @@ class ProductController extends Controller
         });
     }
 
-    private function storeProductImages(Request $request, Product $product)
+    private function storeProductImages($images, Product $product)
     {
-        $images = $request->file('images');
-    
-        if ($images) {
-            $existingImagesCount = $product->images()->count();
-            $newImagesCount = count($images);
-            $totalImages = $existingImagesCount + $newImagesCount;
-    
-            if ($totalImages > 5) {
-                return redirect()->route('products.edit', $product->id)
-                    ->withErrors(['images' => 'You can only upload a maximum of five images.'])
-                    ->withInput();
-            }
-    
-            foreach ($images as $image) {
-                $filename = $this->generateImageFilename($image, $product->name, $product->id);
-                $image_path = $image->storeAs('products', $filename, 'public');
-    
-                ProductImage::create([
-                    'image' => $image_path,
-                    'product_id' => $product->id,
-                ]);
-            }
+       foreach ($images as $image) {
+            $filename = $this->generateImageFilename($image, $product->name, $product->id);
+            $image_path = $image->storeAs('products', $filename, 'public');
+
+            ProductImage::create([
+                'image' => $image_path,
+                'product_id' => $product->id,
+            ]);
         }
     }
     
-    private function updateProductImages(Request $request, Product $product)
+    private function updateProductImages($images, Product $product)
     {
-        $images = $request->file('images');
-    
-        if ($images) {
-            $existingImagesCount = $product->images()->count();
-            $newImagesCount = count($images);
-            $totalImages = $existingImagesCount + $newImagesCount;
-    
-            if ($totalImages > 5) {
-                return redirect()->route('products.edit', $product->id)
-                    ->withErrors(['images' => 'You can only upload a maximum of five images.'])
-                    ->withInput();
+        foreach ($product->images as $image) {
+            $oldPath = $image->image;
+            $newFilename = $this->generateImageFilenameFromPath($oldPath, $product->name, $product->id);
+            $newPath = 'products/' . $newFilename;
+
+            if (Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->move($oldPath, $newPath);
             }
-    
-            $this->storeProductImages($request, $product);
+
+            $image->update(['image' => $newPath]);
         }
-    }    
+
+        $existing_images_count = $product->images()->count();
+        $new_images_count = is_array($images) ? count($images) : 0;
+
+        if ($existing_images_count + $new_images_count > 5) {
+            return redirect()->route('products.edit', $product->id)
+                ->withErrors(['images' => 'You can only upload a maximum of five images.'])
+                ->withInput();
+        }
+
+        if (!empty($images)) {
+            $this->storeProductImages($images, $product);
+        }
+    }
+
+    private function generateImageFilenameFromPath($oldPath, $newTitle, $productId)
+    {
+        $extension = pathinfo($oldPath, PATHINFO_EXTENSION);
+        $slug = Str::slug($newTitle);
+        $app_name = Str::slug(config("globals.app_name"));
+
+        return "{$app_name}-{$slug}-{$productId}-" . uniqid() . ".{$extension}";
+    }
 
     private function generateImageFilename($image, $title, $productId)
     {
@@ -211,7 +237,7 @@ class ProductController extends Controller
         $query = $request->input('query');
 
         $products = Product::with('category')
-        ->where('title', 'like', "%$query%")
+        ->where('name', 'like', "%$query%")
         ->orWhere('description', 'like', "%$query%")
         ->get();
 

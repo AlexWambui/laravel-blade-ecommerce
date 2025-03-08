@@ -1,6 +1,6 @@
 .cards {
     display: grid;
-    gap: 1.5em;
+    gap: 2em 1.5em;
 
     .card {
         box-shadow: 4px 6px 8px #808080;
@@ -21,12 +21,44 @@
             .details {
                 .title {
                     font-size: 1.28em;
-                    margin: 0 0 0.8em;
+                    margin: 0 0 0.4em;
                 }
 
-                .price {
-                    font-size: 1.2em;
-                    color: $success;
+                .prices {
+                    display: flex;
+                    gap: 0.8em;
+                    align-items: flex-end;
+
+                    .price {
+                        font-size: 1.48em;
+                        font-weight: bold;
+                        color: $success;
+                    }
+                }
+
+            }
+            
+            .row {
+                display: grid;
+                grid-template-columns: 1fr 100px;
+                gap: 1.2em;
+
+                .cart {
+                    justify-self: center;
+                    align-self: center;
+    
+                    form {
+                        text-align: center;
+    
+                        button {
+                            background: unset;
+    
+                            span {
+                                font-size: 2.8em;
+                                color: blue;
+                            }
+                        }
+                    }
                 }
             }
         }
