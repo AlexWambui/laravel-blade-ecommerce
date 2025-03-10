@@ -20,6 +20,7 @@ class SaleController extends Controller
     public function index()
     {
         $sales = Sale::with('items', 'delivery', 'user')
+            ->latest()
             ->get()
             ->sortBy([
                 fn($sale) => $sale->delivery?->delivery_status === 'delivered' 
