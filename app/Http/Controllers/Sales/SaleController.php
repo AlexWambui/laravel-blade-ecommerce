@@ -74,7 +74,13 @@ class SaleController extends Controller
     
         return redirect()->back()->with('success', 'Sale details updated successfully.');
     }
-    
+
+    public function destroy(Sale $sale)
+    {
+        $sale->delete();
+
+        return redirect()->route('sales.index')->with('success', 'Sale has been deleted.');
+    }
 
     public function checkoutCreate()
     {

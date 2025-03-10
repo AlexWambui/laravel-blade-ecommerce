@@ -22,6 +22,9 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        $user_purchases = Sale::where('user_id', $user->id)->with('delivery', 'items')->latest()->get();
+        $count_user_purchases = $user_purchases->count();
     
         $count_users = User::whereNotIn('user_level', [0, 1])
             ->where('user_status', 1)
@@ -78,6 +81,9 @@ class DashboardController extends Controller
     
         return view('dashboard.index', compact(
             'user',
+
+            'user_purchases',
+            'count_user_purchases',
 
             'count_users',
             'count_all_users',

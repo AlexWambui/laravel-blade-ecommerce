@@ -57,6 +57,21 @@
             font-size: 1.24em;
         }
     }
+
+    .purchases {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2em;
+
+        .purchase {
+            border: 1px solid $faded_line;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6em;
+        }
+    }
 }
 
 @media screen and (min-width: 726px) {
