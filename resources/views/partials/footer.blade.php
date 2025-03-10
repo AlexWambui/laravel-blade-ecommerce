@@ -40,5 +40,5 @@
         </section>
     </div>
 
-    <p class="copyright">&copy; 2024 | All rights reserved</p>
+    <p class="copyright">&copy; 2025 | All rights reserved</p>
 </footer>
