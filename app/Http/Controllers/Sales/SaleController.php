@@ -13,20 +13,23 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
     public function index()
     {
-        $sales = Sale::with('items', 'delivery', 'user')->orderBy('created_at')->get();
+        $sales = Sale::with('items', 'delivery', 'user')
+            ->get()
+            ->sortBy([
+                fn($sale) => $sale->delivery?->delivery_status === 'delivered' 
+                            && $sale->amount_paid >= $sale->total_amount ? 1 : 0,
+            ]);
+    
         $count_sales = $sales->count();
-
-        // Count delivered sales
-        $count_delivered_sales = $sales->filter(fn($sale) => $sale->delivery->delivery_status === 'delivered')->count();
-
-        // Count pending sales
-        $count_pending_sales = $sales->filter(fn($sale) => $sale->delivery->delivery_status === 'pending')->count();
-
+        $count_delivered_sales = $sales->filter(fn($sale) => $sale->delivery?->delivery_status === 'delivered')->count();
+        $count_pending_sales = $sales->filter(fn($sale) => $sale->delivery?->delivery_status === 'pending')->count();
+    
         return view('admin.sales.index', compact('count_sales', 'count_delivered_sales', 'count_pending_sales', 'sales'));
     }
 
@@ -100,83 +103,93 @@ class SaleController extends Controller
         ], [
             'phone_number.regex' => 'Phone number must start with 2547 or 2541 and have exactly 12 digits. (254746055xxx or 254116055xxx)',
         ]);
-
-        $phone_number = $validated['phone_number'];
-        $email = $validated['email'];
-
+    
         $cart = app(CartController::class)->cartItemsWithTotals();
         $cart_items = $cart['items'];
         $cart_subtotal = $cart['subtotal'];
-
+    
+        if (empty($cart_items)) {
+            return redirect()->route('shop-page')->withErrors(['cart' => 'Your cart is empty. Add items before proceeding to checkout.']);
+        }
+    
         $pickup_method = $request->input('pickup_method');
-
-        $address = '';
-        $location_name = '';
-        $area_name = '';
+        $address = 'Shop';
+        $location_name = 'Shop';
+        $area_name = 'Shop';
         $shipping_cost = 0;
-
+    
         if ($pickup_method === 'delivery') {
             $validated += $request->validate([
                 'address' => 'required|string',
                 'location' => 'required|exists:delivery_locations,id',
                 'area' => 'required|exists:delivery_areas,id',
             ]);
-
+    
             $address = $validated['address'];
             $location = DeliveryLocation::findOrFail($validated['location']);
             $area = DeliveryArea::findOrFail($validated['area']);
-
-            $location_name = $location->location_name;
-            $area_name = $area->area_name;
+    
+            $location_name = $location->name;
+            $area_name = $area->name;
             $shipping_cost = $area->price;
-        } else {
-            $address = 'Shop';
-            $location_name = 'Shop';
-            $area_name = 'Shop';
         }
-
+    
         $total_amount = $shipping_cost + $cart_subtotal;
         $order_number = 'O_' . Str::random(6) . '_' . date('dmy');
         $user_id = Auth::check() ? Auth::user()->id : null;
-
-
-        $order = Sale::create([
-            'order_number' => $order_number,
-            'order_type' => 0,
-            'discount_code' => null,
-            'discount' => 0,
-            'total_amount' => $total_amount,
-            'payment_method' => null,
-            'user_id' => $user_id,
-        ]);
-
-        foreach ($cart_items as $productId => $item) {
-            SaleItem::create([
-                'name' => $item['name'],
-                'quantity' => $item['quantity'],
-                'buying_price' => $item['buying_price'],
-                'selling_price' => $item['selling_price'],
-                'order_id' => $order->id,
-                'product_id' => $item['id'],
+    
+        try {
+            DB::beginTransaction();
+    
+            // Create order
+            $order = Sale::create([
+                'order_number' => $order_number,
+                'order_type' => 0,
+                'discount_code' => null,
+                'discount' => 0,
+                'total_amount' => $total_amount,
+                'payment_method' => null,
+                'user_id' => $user_id,
             ]);
+    
+            // Insert order items
+            foreach ($cart_items as $productId => $item) {
+                SaleItem::create([
+                    'name' => $item['name'],
+                    'quantity' => $item['quantity'],
+                    'buying_price' => $item['buying_price'],
+                    'selling_price' => $item['selling_price'],
+                    'order_id' => $order->id,
+                    'product_id' => $item['id'],
+                ]);
+            }
+    
+            // Insert delivery details
+            SaleDelivery::create([
+                'full_name' => $validated['full_name'],
+                'email' => $validated['email'],
+                'phone_number' => $validated['phone_number'],
+                'address' => $address,
+                'location' => $location_name,
+                'area' => $area_name,
+                'shipping_cost' => $shipping_cost,
+                'order_id' => $order->id,
+            ]);
+    
+            // Commit transaction (save changes)
+            DB::commit();
+    
+            Session::put('order_number', $order->order_number);
+            Session::forget(['cart', 'cart_count']);
+    
+            return redirect()->route('checkout.success');
+    
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'Checkout failed. Please try again.']);
         }
-
-        SaleDelivery::create([
-            'full_name' => $validated['full_name'],
-            'email' => $email,
-            'phone_number' => $phone_number,
-            'address' => $address,
-            'location' => $location_name,
-            'area' => $area_name,
-            'shipping_cost' => $shipping_cost,
-            'order_id' => $order->id,
-        ]);
-
-        Session::put('order_number', $order->order_number);
-        Session::forget(['cart', 'cart_count']);
-
-        return redirect()->route('checkout.success');
     }
+    
 
     public function checkoutSuccess()
     {

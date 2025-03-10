@@ -26,25 +26,37 @@
                                 <th>Customer</th>
                                 <th>Location</th>
                                 <th>Amount</th>
-                                <th>Payment</th>
-                                <th>Delivery</th>
+                                <th class="center">Payment</th>
+                                <th class="center">Delivery</th>
                                 <th class="actions center">Actions</th>
                             </tr>
                         </thead>
             
                         <tbody>
                             @foreach ($sales as $sale)
-                                <tr class="searchable">
+                                <tr class="searchable {{ ($sale->amount_paid >= $sale->total_amount && $sale->delivery?->delivery_status === 'delivered') ? 'read' : '' }}">
                                     <td class="center">{{ $loop->iteration }}</td>
                                     <td>{{ $sale->order_number }}</td>
                                     <td>
-                                        <p>{{ $sale->user->full_name }}</p>
-                                        <p>{{ $sale->user->phone_number }}</p>
+                                        <p>{{ $sale->delivery->full_name ?? '-' }}</p>
+                                        <p>{{ $sale->delivery->phone_number ?? '-' }}</p>
                                     </td>
-                                    <td>{{ $sale->delivery->location }}</td>
-                                    <td>{{ $sale->total_amount }}</td>
-                                    <td>{{ $sale->amount_paid }}</td>
-                                    <td class="{{ $sale->delivery->delivery_status == 'pending' ? 'danger' : 'success' }}">{{ $sale->delivery->delivery_status }}</td>
+                                    <td>{{ $sale->delivery->location ?? '-' }}</td>
+                                    <td>{{ $sale->total_amount ?? '-' }}</td>
+                                    <td class="center">
+                                        @if($sale->amount_paid >= $sale->total_amount)
+                                            <i class="fa fa-check-circle success"></i>
+                                        @else
+                                            <i class="fa fa-times-circle danger"></i>
+                                        @endif
+                                    </td>
+                                    <td class="center">
+                                        @if($sale->delivery?->delivery_status == 'pending')
+                                            <i class="fa fa-times-circle danger"></i>
+                                        @else
+                                            <i class="fa fa-check-circle success"></i>
+                                        @endif
+                                    </td>
                                     <td class="actions center">
                                         <div class="action">
                                             <a href="{{ route('sales.edit', $sale->id) }}">

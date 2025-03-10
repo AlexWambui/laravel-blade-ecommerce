@@ -97,12 +97,12 @@
     
                     <p>
                         <span>Shipping Cost</span>
-                        <span id="shipping_cost_amount">0</span>
+                        <span id="shipping_cost_amount">Ksh. {{ session('shipping_price', 0) }}</span>
                     </p>
     
                     <p class="total_amount">
                         <span>Total</span>
-                        <span id="total_amount">Ksh. {{ number_format($cart['subtotal'], 2) }}</span>
+                        <span id="total_amount">Ksh. {{ number_format($cart['subtotal'] + session('shipping_price', 0), 2) }}</span>
                     </p>
                 </div>
             </div>
@@ -116,53 +116,37 @@
                 const areaSelect = document.getElementById("area");
                 const shippingCostElement = document.getElementById("shipping_cost_amount");
                 const totalElement = document.getElementById("total_amount");
-                const pick_up_method = document.querySelectorAll("input[name='pickup_method']");
-                const delivery_details = document.getElementById("delivery_details");
+                const pickUpMethod = document.querySelectorAll("input[name='pickup_method']");
+                const deliveryDetails = document.getElementById("delivery_details");
 
                 function togglePickupMethod() {
-                    if (pick_up_method[1].checked) {
-                        delivery_details.style.display = 'block';
+                    if (pickUpMethod[1].checked) {
+                        deliveryDetails.style.display = 'block';
                     } else {
-                        delivery_details.style.display = 'none';
+                        deliveryDetails.style.display = 'none';
                     }
                 }
 
                 togglePickupMethod();
+                pickUpMethod.forEach(radio => radio.addEventListener('change', togglePickupMethod));
 
-                pick_up_method.forEach(function (radio) {
-                    radio.addEventListener('change', togglePickupMethod);
-                });
+                // Load the previously stored shipping price from Laravel session
+                let areaPrice = parseFloat("{{ session('shipping_price', 0) }}");
 
-                // Define areaPrice as a global variable
-                let areaPrice = 0;
-
-                // Function to update shipping cost and total
                 function updateShippingAndTotal() {
-                    const shippingCost = parseFloat(areaPrice); // Parse areaPrice as a float
-
-                    if (!isNaN(shippingCost)) {
-                        const cartSubtotal = parseFloat("{{ $cart['subtotal'] }}"); // Get cart subtotal from PHP as a float
-
-                        // Format shipping cost and total with two decimal places
-                        const formattedShippingCost = shippingCost.toFixed(2);
-                        const formattedTotal = (shippingCost + cartSubtotal).toFixed(2);
-
-                        // Update the DOM with formatted values
-                        shippingCostElement.textContent = `Ksh. ${formattedShippingCost}`;
-                        totalElement.textContent = `Ksh. ${formattedTotal}`;
-                    } else {
-                        console.error("Invalid shipping cost:", areaPrice);
+                    if (!isNaN(areaPrice)) {
+                        const cartSubtotal = parseFloat("{{ $cart['subtotal'] }}");
+                        shippingCostElement.textContent = `Ksh. ${areaPrice.toFixed(2)}`;
+                        totalElement.textContent = `Ksh. ${(cartSubtotal + areaPrice).toFixed(2)}`;
                     }
                 }
 
-                locationSelect.addEventListener("change", function () {
-                    const selectedLocationId = this.value;
+                updateShippingAndTotal(); // Ensure correct values on page load
 
-                    // Make an Ajax request to fetch areas based on the selected location
-                    fetch(`/areas/fetch/${selectedLocationId}`)
+                locationSelect.addEventListener("change", function () {
+                    fetch(`/areas/fetch/${this.value}`)
                         .then(response => response.json())
                         .then(data => {
-                            // Clear and update the areas select box
                             areaSelect.innerHTML = "";
                             areaSelect.add(new Option("Select Area", ""));
 
@@ -173,15 +157,10 @@
                 });
 
                 areaSelect.addEventListener("change", function () {
-                    const selectedAreaId = this.value;
-
-                    // Make an Ajax request to fetch the selected area's price
-                    fetch(`/areas/shipping-price/${selectedAreaId}`)
+                    fetch(`/areas/shipping-price/${this.value}`)
                         .then(response => response.json())
                         .then(data => {
-                            areaPrice = data.price; // Update the global areaPrice variable
-
-                            // Trigger update with the area's price
+                            areaPrice = data.price;
                             updateShippingAndTotal();
                         });
                 });

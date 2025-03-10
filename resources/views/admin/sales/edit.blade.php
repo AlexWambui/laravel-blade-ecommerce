@@ -22,37 +22,37 @@
                     <div class="details">
                         <p class="text-success">
                             <span>Order_number</span>
-                            <span>{{ $sale->order_number }}</span>
+                            <span>{{ $sale->order_number ?? '-' }}</span>
                         </p>
                         <p>
                             <span>Names</span>
-                            <span>{{ $sale->delivery->full_name }}</span>
+                            <span>{{ $sale->delivery->full_name ?? '-' }}</span>
                         </p>
                         <p>
                             <span>Email Address</span>
-                            <span>{{ $sale->delivery->email }}</span>
+                            <span>{{ $sale->delivery->email ?? '-' }}</span>
                         </p>
     
                         <p>
                             <span>Phone Number</span>
-                            <span>+{{ $sale->delivery->formatted_phone_number }}</span>
+                            <span>+{{ $sale->delivery->formatted_phone_number ?? '-' }}</span>
                         </p>
                         
                         <p>
                             <span>Address</span>
-                            <span>{{ $sale->delivery->address }}</span>
+                            <span>{{ $sale->delivery->address ?? '-' }}</span>
                         </p>
                         <p>
                             <span>Location</span>
-                            <span>{{ $sale->delivery->location }}</span>
+                            <span>{{ $sale->delivery->location ?? '-' }}</span>
                         </p>
                         <p>
                             <span>Area</span>
-                            <span>{{ $sale->delivery->area }}</span>
+                            <span>{{ $sale->delivery->area ?? '-' }}</span>
                         </p>
                         <p>
                             <span>Order Date</span>
-                            <span>{{ $sale->created_at->format('d M Y \a\t h:i A') }}</span>
+                            <span>{{ $sale->created_at?->format('d M Y \a\t h:i A') ?? '-' }}</span>
                         </p>
                     </div>
     
@@ -71,7 +71,7 @@
     
                         <p>
                             <span>Shipping Cost : </span>
-                            <span>Ksh. {{ $sale->delivery->shipping_cost }}</span>
+                            <span>Ksh. {{ $sale->delivery->shipping_cost ?? '-' }}</span>
                         </p>
                         <p class="text-success bold">
                             <span>Total Amount : </span>
@@ -82,14 +82,14 @@
                             <p>
                                 <span>Payment : </span>
                                 <span>
-                                    @if($amount_paid_display == 'Paid')
+                                    @if ($amount_paid_display == 'Paid')
                                         <i class="fa fa-check-circle title success"></i>
-                                    @elseif($amount_paid_display == 'Underpaid')
-                                        <span class="danger title">Ksh. {{ number_format($sale->amount_paid, 2) }}</span>
-                                    @elseif($amount_paid_display == 'Overpaid')
-                                        <span class="success title">Ksh. {{ number_format($sale->amount_paid, 2) }}</span>
+                                    @elseif ($amount_paid_display == 'Underpaid')
+                                        <span class="danger title">Ksh. {{ number_format($sale->amount_paid ?? 0, 2) }}</span>
+                                    @elseif ($amount_paid_display == 'Overpaid')
+                                        <span class="success title">Ksh. {{ number_format($sale->amount_paid ?? 0, 2) }}</span>
                                     @else
-                                        <span>{{ $sale->amount_paid }}</span>
+                                        <span>{{ $sale->amount_paid ?? '-' }}</span>
                                     @endif
                                 </span>
                             </p>
@@ -97,10 +97,10 @@
                             <p>
                                 <span>Delivery :</span>
                                 <span>
-                                    @if($sale->delivery->delivery_status == 'delivered')
+                                    @if($sale->delivery?->delivery_status == 'delivered')
                                         <i class="fa fa-check-circle success"></i>
                                     @else
-                                        {{ ucfirst($sale->delivery->delivery_status) }}
+                                        {{ ucfirst($sale->delivery?->delivery_status) }}
                                     @endif
                                 </span>
                             </p>
@@ -118,7 +118,7 @@
                                         type="radio" 
                                         name="delivery_status" 
                                         value="{{ $status }}"
-                                        {{ old('delivery_status', $sale->delivery->delivery_status) == $status ? 'checked' : '' }}>
+                                        {{ old('delivery_status', $sale->delivery?->delivery_status) == $status ? 'checked' : '' }}>
                                     <span>{{ ucfirst($status) }}</span>
                                 </label>
                             @endforeach

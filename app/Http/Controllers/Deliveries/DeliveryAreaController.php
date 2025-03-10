@@ -76,6 +76,8 @@ class DeliveryAreaController extends Controller
         $area = DeliveryArea::findOrFail($areaId);
         $price = $area->price;
 
+        session(['shipping_price' => $price]);
+
         return response()->json(['price' => $price]);
     }
 }
