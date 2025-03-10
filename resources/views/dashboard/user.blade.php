@@ -30,7 +30,10 @@
                 </p>
             </div>
         @empty
-            <p>You've not yet made any purchases.</p>
+            <div>
+                <p>You've not yet made any purchases.</p>
+                <a href="{{ route('shop-page') }}">Start Shopping Now</a>
+            </div>
         @endforelse
     </div>
 </section>

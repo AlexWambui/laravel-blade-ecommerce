@@ -589,6 +589,16 @@ aside .footer .logout button i {
   }
 }
 
+@media print {
+  aside {
+    display: none;
+    width: 0;
+  }
+  .app_content {
+    margin-left: 0 !important;
+  }
+}
+
 footer {
   background: #1a237e;
   color: #fff;

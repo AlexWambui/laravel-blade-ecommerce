@@ -114,3 +114,16 @@ aside {
         }
     }
 }
+
+
+
+@media print {
+    aside {
+        display: none;
+        width: 0;
+    }
+
+    .app_content {
+        margin-left: 0!important;
+    }
+}
