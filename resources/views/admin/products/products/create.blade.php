@@ -79,13 +79,13 @@
                 <div class="input_group_3">
                     <div class="inputs">
                         <label for="stock_count">Stock Count</label>
-                        <input type="number" name="stock_count" id="stock_count" placeholder="Stock in hand" value="{{ old('stock_count', 0) }}" />
+                        <input type="number" name="stock_count" id="stock_count" placeholder="Stock in hand" value="{{ old('stock_count', 1) }}" />
                         <x-input-error field="stock_count" />
                     </div>
 
                     <div class="inputs">
                         <label for="safety_stock">Safety Stock</label>
-                        <input type="number" name="safety_stock" id="safety_stock" placeholder="Safety Stock" value="{{ old('safety_stock', 0) }}" />
+                        <input type="number" name="safety_stock" id="safety_stock" placeholder="Safety Stock" value="{{ old('safety_stock', 1) }}" />
                         <x-input-error field="safety_stock" />
                     </div>
                 </div>

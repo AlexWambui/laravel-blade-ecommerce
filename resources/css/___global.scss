@@ -8,10 +8,25 @@
 body {
     background: $background_color;
     color: $text_color;
+    scroll-behavior: smooth;
 }
 
 .container {
     padding: 10px 5%;
+}
+
+.breadcrumb {
+    display: flex;
+
+    a {
+        font-weight: bold;
+
+        &:after {
+            content: " / ";
+            margin: 0 0.8em 0;
+        }
+    }
+
 }
 
 img {

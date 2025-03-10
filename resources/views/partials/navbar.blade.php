@@ -8,9 +8,10 @@
     <div class="nav_links">
         @php
             $nav_links = [
-                ['route' => 'about-page', 'text' => 'About'],
-                ['route' => 'services-page', 'text' => 'Services'],
-                ['route' => 'users.blogs', 'text' => 'Blogs'],
+                // ['route' => 'about-page', 'text' => 'About'],
+                // ['route' => 'users.blogs', 'text' => 'Blogs'],
+                ['route' => 'home-page', 'text' => 'Home'],
+                ['route' => 'shop-page', 'text' => 'Shop'],
                 ['route' => 'contact-page', 'text' => 'Contact'],
             ];
         @endphp
@@ -28,22 +29,25 @@
         @endforeach
     </div>
     
-    <div class="nav_authentication">
-        @auth
-            <div class="actions">
-                <a href="{{ route('profile.edit') }}" class="profile">
-                    <i class="fa fa-user"></i>
+    <div class="extra_links">
+        <div class="links">
+            <div class="shopping_cart">
+                <a href="{{ route('cart.index') }}">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>{{ session('cart_count', 0) }}</span>
                 </a>
-    
+            </div>
+
+            @if(Auth::user())
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
-    
-                    <button type="submit" class="logout_btn">Logout</button>
+
+                    <button type="submit" class="btn btn_logout">Logout</button>
                 </form>
-            </div>
-        @else
-            <a href="{{ route('login') }}" class="login_btn">Login</a>
-        @endif
+            @else
+                <a href="{{ route('login') }}" class="btn btn_login">Login</a>
+            @endif
+        </div>
     </div>
 
     <div class="burger_menu">

@@ -8,8 +8,9 @@
 
         <section class="links">
             <a href="{{ Route::has('home-page') ? route('home-page') : '#' }}">Home</a>
-            <a href="{{ Route::has('about-page') ? route('about-page') : '#' }}">About</a>
-            <a href="{{ Route::has('services-page') ? route('about-page') : '#' }}">Services</a>
+            {{-- <a href="{{ Route::has('about-page') ? route('about-page') : '#' }}">About</a> --}}
+            {{-- <a href="{{ Route::has('services-page') ? route('about-page') : '#' }}">Services</a> --}}
+            <a href="{{ Route::has('shop-page') ? route('shop-page') : '#' }}">Shop</a>
             <a href="{{ Route::has('contact-page') ? route('contact-page') : '#' }}">Contact</a>
         </section>
 
@@ -29,11 +30,11 @@
 
             <div class="socials">
                 <a href="https://wa.me/{{ $appSettings['whatsapp_number'] ?? config('globals.app_whatsapp_number') }}">
-                    <img src="{{ Vite::asset('resources/images/whatsapp.png') }}" alt="{{ config('globals.app_name') }} Whatsapp" width="30px" height="30px">
+                    <img src="{{ asset('assets/images/whatsapp.png') }}" alt="{{ config('globals.app_name') }} Whatsapp" width="30px" height="30px">
                 </a>
 
                 <a href="#">
-                    <img src="{{ Vite::asset('resources/images/instagram.png') }}" alt="{{ config('globals.app_name') }} Instagram" width="30px" height="30px">
+                    <img src="{{ asset('assets/images/instagram.png') }}" alt="{{ config('globals.app_name') }} Instagram" width="30px" height="30px">
                 </a>
             </div>
         </section>

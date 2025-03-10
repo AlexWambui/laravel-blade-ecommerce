@@ -69,16 +69,15 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::where([
+        $product = Product::with('images', 'category')->where([
             ['is_visible', 1],
             ['slug', $slug],
         ])->firstOrFail();
-        $product_images = $product->images();
         $related_products = Product::where('category_id', $product->category_id)
         ->where('id', '!=', $product->id)
         ->take(5)
         ->get();
-        return view('products.product-details', compact('product', 'product_images', 'related_products'));
+        return view('shop.product-details', compact('product', 'related_products'));
     }
 
     public function edit(Product $product)
@@ -248,7 +247,7 @@ class ProductController extends Controller
         return view('products.search-results', compact('products', 'query'));
     }
 
-    public function categorized($category_slug)
+    public function categorizedProducts($category_slug)
     {
         $categories = ProductCategory::orderBy('name', 'asc')->get();
         $category = ProductCategory::where('slug', $category_slug)->firstOrFail();
@@ -258,6 +257,6 @@ class ProductController extends Controller
             $product->calculateDiscount();
         }
 
-        return view('products.categorized', compact('category', 'categories', 'products'));
+        return view('shop.categorized-products', compact('category', 'categories', 'products'));
     }
 }

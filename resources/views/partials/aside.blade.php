@@ -39,6 +39,18 @@
                 'level' => ['super admin', 'admin'],
             ],
             [
+                'route' => 'sales.index',
+                'icon' => 'fas fa-dollar-sign',
+                'text' => 'Sales',
+                'level' => ['super admin', 'admin'],
+            ],
+            [
+                'route' => 'locations.index',
+                'icon' => 'fas fa-map-marker-alt',
+                'text' => 'Locations',
+                'level' => ['super admin', 'admin'],
+            ],
+            [
                 'route' => 'messages.index',
                 'icon' => 'fas fa-comment',
                 'text' => 'Messages',

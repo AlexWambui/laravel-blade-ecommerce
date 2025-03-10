@@ -10,7 +10,7 @@ $warning: #c28005;
 
 
 // $background_color: #2b3230;
-$background_color: #fff;
+$background_color: #f8fafc;
 // $text_color: #efefef;
 $text_color: #000;
 
@@ -42,11 +42,11 @@ $light_link_color: lightblue;
 
 
 .danger {
-    color: $danger;
+    color: $danger !important;
 }
 
 .success {
-    color: $success;
+    color: $success !important;
 }
 
 .read,

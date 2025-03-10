@@ -163,8 +163,8 @@
 
     <x-slot name="scripts">
         <x-sweetalert />
-        <script src="{{ Vite::asset('resources/js/jquery.js') }}"></script>
-        <script src="{{ Vite::asset('resources/js/jquery_ui.js') }}"></script>
+        <script src="{{ asset('assets/js/jquery.js') }}"></script>
+        <script src="{{ asset('assets/js/jquery_ui.js') }}"></script>
         <x-text-editor />
         <script>
             $(document).ready(function() {

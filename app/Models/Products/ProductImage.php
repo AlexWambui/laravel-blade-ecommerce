@@ -21,7 +21,7 @@ class ProductImage extends Model
             return url('storage/'.$this->image);
         }
         else {
-            return asset('assets/images/default_product.jpg');
+            return asset('assets/images/default_image.jpg');
         }
     }
 }

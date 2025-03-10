@@ -1,4 +1,8 @@
 .HomePage {
+    section {
+        margin: 0 0 10em;
+    }
+
     .Hero {
         $hero_height: 70dvh;
         height: $hero_height;
@@ -34,9 +38,9 @@
                     margin: 2.4em 0;
         
                     a {
-                        background: #000;
-                        color: #fff;
-                        padding: 12px 24px;
+                        background: $themed_background;
+                        color:$themed_color;
+                        padding: 16px 24px;
                         font-weight: bold;
                         font-size: 1.2em;
                         border-radius: 8px;
@@ -49,6 +53,43 @@
                 }
             }
     
+        }
+    }
+
+    .About {
+        .container {
+            .steps {
+                display: grid;
+                gap: 2em;
+                justify-items: center;
+
+                .step {
+                    width: 200px;
+                    padding: 24px 32px;
+                    border-radius: 8px;
+                    background: $themed_background;
+                    color: $themed_color;
+                    text-align: center;
+
+                    span {
+                        font-size: 2.4em;
+                        margin: 0 0 0.4em;
+                    }
+
+                    p {
+                        font-size: 1.2em;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+
+    .FeaturedProducts {
+        .section_title {
+            font-size: 2.4em;
+            text-transform: uppercase;
+            margin: 0 0 0.5em;
         }
     }
 }
@@ -77,6 +118,14 @@
     
                 .image {
                     height: $hero_height;
+                }
+            }
+        }
+
+        .About {
+            .container {
+                .steps {
+                    grid-template-columns: repeat(4, 1fr);
                 }
             }
         }

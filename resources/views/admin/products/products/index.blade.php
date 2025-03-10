@@ -32,7 +32,7 @@
                             <div class="card searchable">
                                 <div class="image">
                                     <a href="{{ route('products.edit', $product->id) }}">
-                                        <img src="{{ $product->getFirstImage() ?? Vite::asset('resources/images/default_image.jpg') }}" alt="Product Image" width="300" height="300">
+                                        <img src="{{ $product->getFirstImage() ?? asset('assets/images/default_image.jpg') }}" alt="Product Image" width="300" height="300">
                                     </a>
                                 </div>
 
