@@ -105,10 +105,10 @@ class SaleController extends Controller
             'phone_number' => [
                 'required',
                 'string',
-                'regex:/^(2547|2541)[0-9]{8}$/',
+                'regex:/^(07|01)[0-9]{8}$/',
             ],
         ], [
-            'phone_number.regex' => 'Phone number must start with 2547 or 2541 and have exactly 12 digits. (254746055xxx or 254116055xxx)',
+            'phone_number.regex' => 'Phone number must start with 07 or 01 and have exactly 12 digits. (0746055xxx or 0116055xxx)',
         ]);
     
         $cart = app(CartController::class)->cartItemsWithTotals();
